@@ -17,4 +17,6 @@ class Enemy(BaseEntity):
         if self.x < 0 or self.x > 750:  # Assuming screen width is 800
             self.speed = -self.speed
 
-    def draw(self,
+    def draw(self, surface):
+        # Draw the enemy as a red rectangle
+        self.hitbox = pygame.draw.rect(surface, (255, 0, 0), (self.x, self.y, self.width, self.height))
