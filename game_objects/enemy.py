@@ -1,4 +1,4 @@
-# enemy class
+# eenemy
 
 import pygame
 from game_object import GameObject
@@ -11,7 +11,7 @@ class Enemy(GameObject):
         self.hitbox = pygame.Rect(x, y, self.width, self.height)
 
     def update(self):
-        # Add enemy behavior here (movement, etc.)
+        # Logic for enemy behavior can go here
         pass
 
     def draw(self, surface):
