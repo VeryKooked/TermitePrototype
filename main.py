@@ -35,11 +35,9 @@ while running:
         if event.type == pygame.QUIT:
             running = False
 
-    # Player movement
-    player.move(keys, platforms)
-    
-    # Enemy movement
-    enemy.move(platforms)
+    # Update player and enemy movement
+    player.update(keys, platforms)
+    enemy.update(platforms)
 
     # Update Camera to follow the player
     camera.update(player)
@@ -48,7 +46,7 @@ while running:
     for platform in platforms:
         pygame.draw.rect(screen, (139, 69, 19), camera.apply_rect(platform.rect))  # Brown platforms
 
-    # Draw entities with camera applied
+    # Draw player and enemy with camera applied
     player.draw(screen, camera)
     enemy.draw(screen, camera)
 

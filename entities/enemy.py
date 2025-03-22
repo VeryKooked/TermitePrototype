@@ -1,20 +1,15 @@
 import pygame
-from entities.base import BaseEntity
-from game_states.camera import Camera
+from entities.base import Entity
 
-class Enemy(BaseEntity):
+class Enemy(Entity):
     def __init__(self, x, y):
-        super().__init__(x, y, 50, 50)  # Call the constructor of BaseEntity
+        super().__init__(x, y, 50, 50)
+        self.color = (255, 0, 0)  # Red color
+        self.vel_x = 2  # Enemy speed
 
-    def move(self, platforms):
-        # Simple AI: Move back and forth
-        self.rect.x += 2  # Move right
-        self.apply_gravity(platforms)
-
-    def apply_gravity(self, platforms):
-        self.rect.y += 0.5  # Gravity applied to enemy
-        self.collide_with_platforms(platforms)
+    def update(self, platforms):
+        """Update enemy state (simple AI or random movement)"""
+        self.move(platforms)
 
     def draw(self, screen, camera):
-        pygame.draw.rect(screen, (255, 0, 0), camera.apply(self))
-
+        pygame.draw.rect(screen, self.color, camera.apply(self))

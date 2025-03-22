@@ -1,24 +1,39 @@
 import pygame
 
-class BaseEntity:
+class Entity:
     def __init__(self, x, y, width, height):
         self.rect = pygame.Rect(x, y, width, height)
+        self.vel_x = 0
+        self.vel_y = 0
+        self.on_ground = False  # To check if the entity is standing on a platform
 
-    def move(self, dx, dy):
-        """Move the entity by a certain amount."""
-        self.rect.x += dx
-        self.rect.y += dy
+    def move(self, platforms):
+        """Move the entity while checking for collisions"""
+        self.rect.x += self.vel_x
+        self.collide_with_platforms(platforms, 'x')
 
-    def collide_with_platforms(self, platforms):
-        """Check and resolve collisions with platforms."""
+        self.rect.y += self.vel_y
+        self.collide_with_platforms(platforms, 'y')
+
+    def collide_with_platforms(self, platforms, axis):
+        """Check for collisions with platforms on specified axis"""
         for platform in platforms:
             if self.rect.colliderect(platform.rect):
-                # If colliding from above (top collision)
-                if self.rect.bottom > platform.rect.top and self.rect.top < platform.rect.top:
-                    self.rect.bottom = platform.rect.top  # Place entity on top of platform
-                    return True  # Collision resolved
-        return False
-
-    def draw(self, screen, color):
-        """Draw the entity to the screen with a specified color."""
-        pygame.draw.rect(screen, color, self.rect)
+                if axis == 'x':  # Horizontal collision
+                    if self.vel_x > 0:  # Moving right
+                        self.rect.right = platform.rect.left
+                    elif self.vel_x < 0:  # Moving left
+                        self.rect.left = platform.rect.right
+                    self.vel_x = 0  # Stop horizontal movement
+                elif axis == 'y':  # Vertical collision
+                    if self.vel_y > 0:  # Falling
+                        self.rect.bottom = platform.rect.top
+                        self.on_ground = True
+                        self.vel_y = 0  # Stop falling
+                    elif self.vel_y < 0:  # Moving up (jumping)
+                        self.rect.top = platform.rect.bottom
+                        self.vel_y = 0  # Stop upward movement
+        if axis == 'y' and not self.on_ground:
+            self.vel_y += 1  # Simulate gravity
+        else:
+            self.on_ground = False  # Not on the ground anymore
