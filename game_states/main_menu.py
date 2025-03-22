@@ -3,25 +3,24 @@
 import pygame
 
 class MainMenu:
-    def __init__(self, display):
-        self.display = display
+    def __init__(self):
         self.font = pygame.font.Font(None, 74)
+        self.title_text = self.font.render("Main Menu", True, (255, 255, 255))
+        self.start_text = self.font.render("Press ENTER to start", True, (255, 255, 255))
+
+    def display(self, screen):
+        screen.fill((0, 0, 0))  # Black background
+        screen.blit(self.title_text, (200, 100))  # Center title
+        screen.blit(self.start_text, (150, 300))  # Center start text
 
     def run(self):
         while True:
-            self.display.fill((0, 0, 0))  # Black background
-            title_text = self.font.render('Main Menu', True, (255, 255, 255))
-            start_text = self.font.render('Press ENTER to Start', True, (255, 255, 255))
-
-            self.display.blit(title_text, (self.display.get_width() // 2 - title_text.get_width() // 2, 100))
-            self.display.blit(start_text, (self.display.get_width() // 2 - start_text.get_width() // 2, 300))
-
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
-                    return None
+                    return
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_RETURN:
-                        return "level"  # Transition to level state
+                    if event.key == pygame.K_RETURN:  # Start game on ENTER
+                        return
 
-            pygame.display.flip()
+            pygame.display.update()

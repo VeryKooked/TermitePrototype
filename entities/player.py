@@ -5,7 +5,7 @@ from entities.base import Base
 
 class Player(Base):
     def __init__(self, x, y):
-        super().__init__(x, y, 50, 50)  # Initialize with width and height
+        super().__init__(x, y, 50, 50)  # Width and height for the player
         self.velocity = 5
         self.is_jumping = False
         self.jump_speed = 10
@@ -18,7 +18,7 @@ class Player(Base):
             self.x -= self.velocity
         if keys[pygame.K_RIGHT] and self.x < 800 - self.width:  # Prevent going off-screen
             self.x += self.velocity
-        if keys[pygame.K_SPACE] and self.on_ground:  # Jump logic
+        if keys[pygame.K_SPACE] and self.on_ground:  # Jump
             self.is_jumping = True
             self.vertical_velocity = -self.jump_speed
             self.on_ground = False
@@ -28,7 +28,7 @@ class Player(Base):
             self.vertical_velocity += self.gravity
             self.y += self.vertical_velocity
         
-        # Simulate ground collision (Assuming ground is at y = 500)
+        # Simulate ground collision
         if self.y >= 500 - self.height:
             self.y = 500 - self.height
             self.on_ground = True
