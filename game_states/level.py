@@ -1,48 +1,41 @@
 # game_states/level.py
 
 import pygame
-from objects.player import Player
-from objects.enemy import Enemy
+from entities.player import Player
+from entities.enemy import Enemy
+from game_states.game_over_state import GameOverState
 
 class Level:
-    def __init__(self, screen):
-        self.screen = screen
+    def __init__(self, display):
+        self.display = display
+        self.clock = pygame.time.Clock()
         self.player = Player(100, 500)
-        self.enemy = Enemy(400, 500)
-        self.blocks = [pygame.Rect(200, 450, 100, 20), pygame.Rect(400, 350, 100, 20)]
-        self.gravity_value = 0.5
+        self.enemies = [Enemy(400, 500)]
+        self.running = True
 
     def run(self):
-        clock = pygame.time.Clock()
-        running = True
-
-        while running:
+        while self.running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    running = False
+                    self.running = False
 
             keys = pygame.key.get_pressed()
             self.player.move(keys)
 
-            # Apply gravity effect
-            if self.player.y < 500:  # Prevent falling through the ground
-                self.player.y += self.gravity_value
+            # Update enemy positions
+            for enemy in self.enemies:
+                enemy.move()
 
-            # Collision with blocks
-            for block in self.blocks:
-                if self.player.hitbox.colliderect(block):
-                    self.player.y = block.top - self.player.height
-                    self.player.on_ground = True
+            # Check for game over condition (example: player falls below screen)
+            if self.player.y > 600:
+                return "game_over"
 
-            self.screen.fill((135, 206, 235))  # Sky blue background
-            self.player.draw(self.screen)
-
-            for block in self.blocks:
-                pygame.draw.rect(self.screen, (0, 255, 0), block)  # Draw moving blocks
-
-            self.enemy.draw(self.screen)  # Draw enemy (for future use)
+            self.display.fill((135, 206, 235))  # Sky blue background
+            self.player.draw(self.display)
+            for enemy in self.enemies:
+                enemy.draw(self.display)
 
             pygame.display.flip()
-            clock.tick(60)
+            self.clock.tick(60)
 
-        return "main_menu"  # Return to main menu when done
+        return "main_menu"

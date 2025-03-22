@@ -1,9 +1,9 @@
 # enemy.py
 
 import pygame
-from objects import game_object
+from entities import base
 
-class Enemy(game_object):
+class Enemy(base):
     def __init__(self, x, y):
         super().__init__(x, y)
         self.width = 50
