@@ -1,11 +1,18 @@
-# entities/enemy.py
-
 import pygame
-from entities.base import Base
+from entities.base import BaseEntity
 
-class Enemy(Base):
+class Enemy(BaseEntity):
     def __init__(self, x, y):
-        super().__init__(x, y, 50, 50)  # Width and Height for the enemy
-    
-    def draw(self, surface, camera_offset_x):
-        pygame.draw.rect(surface, (255, 0, 0), (self.x - camera_offset_x, self.y, self.width, self.height))
+        super().__init__(x, y, 50, 50)  # Call the constructor of BaseEntity
+
+    def move(self, platforms):
+        # Simple AI: Move back and forth
+        self.rect.x += 2  # Move right
+        self.apply_gravity(platforms)
+
+    def apply_gravity(self, platforms):
+        self.rect.y += 0.5  # Gravity applied to enemy
+        self.collide_with_platforms(platforms)
+
+    def draw(self, screen):
+        self.draw(screen, (255, 0, 0))  # Red enemy

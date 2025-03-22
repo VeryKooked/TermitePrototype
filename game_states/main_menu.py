@@ -1,26 +1,25 @@
-# game_states/main_menu.py
 
 import pygame
 
+
 class MainMenu:
     def __init__(self):
-        self.font = pygame.font.Font(None, 74)
-        self.title_text = self.font.render("Main Menu", True, (255, 255, 255))
-        self.start_text = self.font.render("Press ENTER to start", True, (255, 255, 255))
+        self.options = ["Start Game", "Quit"]
+        self.selected_option = 0
 
     def display(self, screen):
-        screen.fill((0, 0, 0))  # Black background
-        screen.blit(self.title_text, (200, 100))  # Center title
-        screen.blit(self.start_text, (150, 300))  # Center start text
+        font = pygame.font.SysFont('Arial', 36)
+        screen.fill((0, 0, 0))
+        for index, option in enumerate(self.options):
+            cursor = ">" if index == self.selected_option else " "
+            text = font.render(f"{cursor} {option}", True, (255, 255, 255))
+            screen.blit(text, (150, 100 + index * 50))
 
-    def run(self):
-        while True:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    return
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_RETURN:  # Start game on ENTER
-                        return
-
-            pygame.display.update()
+    def handle_input(self, input):
+        if input == 'up':
+            self.selected_option = (self.selected_option - 1) % len(self.options)
+        elif input == 'down':
+            self.selected_option = (self.selected_option + 1) % len(self.options)
+        elif input == 'enter':
+            return self.options[self.selected_option]
+        return None

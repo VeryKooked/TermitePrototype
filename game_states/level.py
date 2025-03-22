@@ -1,34 +1,35 @@
-# game_states/level.py
-
 import pygame
 from entities.player import Player
 from entities.enemy import Enemy
 
 class Level:
-    def __init__(self):
-        self.player = Player(100, 500)  # Initial position of the player
-        self.enemy = Enemy(400, 500)     # Initial position of the enemy
+    def __init__(self, player):
+        self.player = player
+        self.platforms = [pygame.Rect(100, 300, 200, 10), pygame.Rect(300, 200, 200, 10)]  # platforms
+        self.enemies = pygame.sprite.Group()
 
-    def run(self, screen):
-        clock = pygame.time.Clock()
-        running = True
-        
-        while running:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    return
-            
-            keys = pygame.key.get_pressed()
-            self.player.move(keys)  # Update player position
-        
-            # Camera offset logic
-            camera_offset_x = self.player.x - (800 / 2) + (self.player.width / 2)
-            camera_offset_x = max(0, camera_offset_x)  # Prevent going off-screen
-            
-            screen.fill((0, 0, 0))  # Clear the screen
-            self.player.draw(screen, camera_offset_x)  # Draw player
-            self.enemy.draw(screen, camera_offset_x)    # Draw enemy
-            
-            pygame.display.update()  # Update the display
-            clock.tick(60)  # Ensure the game runs at 60 FPS
+    def add_enemy(self, enemy):
+        self.enemies.add(enemy)
+
+    def update(self):
+        self.player.update(gravity=1)
+        for enemy in self.enemies:
+            enemy.update()
+            if enemy.rect.x < 0 or enemy.rect.x > 600:
+                enemy.change_direction()
+
+    def handle_input(self, keys):
+        if keys[pygame.K_a]:  # Left
+            self.player.move_left()
+        elif keys[pygame.K_d]:  # Right
+            self.player.move_right()
+        elif keys[pygame.K_w]:  # Jump
+            self.player.jump()
+
+    def render(self, screen):
+        screen.fill((0, 0, 0))  # Clear the screen
+        pygame.draw.rect(screen, (0, 255, 0), self.player.rect)  # Draw the player
+        for platform in self.platforms:
+            pygame.draw.rect(screen, (0, 0, 255), platform)  # Draw platforms
+        for enemy in self.enemies:
+            pygame.draw.rect(screen, (255, 0, 0), enemy.rect)  # Draw enemies
