@@ -1,25 +1,25 @@
-# player.py
+# entities/player.py
 
 import pygame
-from objects import game_object
+from .base import BaseEntity
 
-class Player(game_object):
+class Player(BaseEntity):
     def __init__(self, x, y):
         super().__init__(x, y)
         self.width = 50
-        self.height = 50    
+        self.height = 50
         self.velocity = 5
         self.is_jumping = False
         self.jump_speed = 10
-        self.gravity = 1
+        self.gravity = 0.5
         self.vertical_velocity = 0
-        self.on_ground = False
-        self.hitbox = pygame.Rect(x, y, self.width, self.height)
+        self.on_ground = True
+        self.hitbox = pygame.Rect(self.x, self.y, self.width, self.height)
 
     def move(self, keys):
-        if keys[pygame.K_a]:  # Move left
+        if keys[pygame.K_LEFT]:  # Move left
             self.x -= self.velocity
-        if keys[pygame.K_d]:  # Move right
+        if keys[pygame.K_RIGHT]:  # Move right
             self.x += self.velocity
         if keys[pygame.K_SPACE] and self.on_ground:  # Jump
             self.is_jumping = True
