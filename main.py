@@ -2,7 +2,7 @@
 
 import pygame
 from game_states.main_menu import MainMenu
-from game_states.gameplay import Gameplay
+from game_states.level import Level
 
 # Initialize Pygame
 pygame.init()
@@ -22,7 +22,7 @@ def main():
     current_state = "main_menu"
 
     menu_state = MainMenu(screen)
-    game_state = Gameplay(screen)
+    game_state = Level(screen)
 
     while running:
         for event in pygame.event.get():
