@@ -1,8 +1,6 @@
-# main.py
-
 import pygame
-from game_states.main_menu import MainMenu
-from game_states.level import Level
+from entities.player import Player
+from entities.enemy import Enemy
 
 # Initialize Pygame
 pygame.init()
@@ -14,29 +12,31 @@ FPS = 60
 
 # Set up the display
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption("My Platformer Game")
+pygame.display.set_caption("Simple Platformer")
 
 def main():
     clock = pygame.time.Clock()
+    player = Player(100, 500)  # Initial position of the player
+    enemy = Enemy(400, 500)    # Initial position of the enemy
     running = True
-    current_state = "main_menu"
-
-    menu_state = MainMenu(screen)
-    game_state = Level(screen)
 
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
 
-        if current_state == "main_menu":
-            current_state = menu_state.run()
-        elif current_state == "gameplay":
-            current_state = game_state.run()
+        keys = pygame.key.get_pressed()
+        player.move(keys)  # Move player based on key inputs
 
-        clock.tick(FPS)
+        # Calculate camera offset to center on the player
+        camera_offset_x = player.x - (SCREEN_WIDTH / 2) + (player.width / 2)
 
-    pygame.quit()
+        # Prevent camera from moving left beyond the starting point
+        camera_offset_x = max(0, camera_offset_x)
 
-if __name__ == "__main__":
-    main()
+        # Rendering
+        screen.fill((0, 0, 0))  # Clear the screen
+
+        # Draw player and enemy with camera offset
+        player.draw(screen, camera_offset_x)
+        enemy.draw(screen, camera_offset_x)

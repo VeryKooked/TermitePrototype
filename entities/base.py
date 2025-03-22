@@ -1,12 +1,14 @@
 # entities/base.py
 
-class BaseEntity:
-    def __init__(self, x, y):
+import pygame
+
+class Base:
+    def __init__(self, x, y, width, height):
         self.x = x
         self.y = y
+        self.width = width
+        self.height = height
 
-    def update(self):
-        pass
-
-    def draw(self, surface):
-        pass
+    def draw(self, surface, camera_offset_x):
+        # This method should be overridden by subclasses
+        raise NotImplementedError("Subclasses must implement draw method.")

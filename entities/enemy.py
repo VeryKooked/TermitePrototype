@@ -1,7 +1,7 @@
 # entities/enemy.py
 
 import pygame
-from .base import BaseEntity
+from entities.base import BaseEntity
 
 class Enemy(BaseEntity):
     def __init__(self, x, y):
@@ -11,12 +11,16 @@ class Enemy(BaseEntity):
         self.speed = 2
         self.hitbox = pygame.Rect(self.x, self.y, self.width, self.height)
 
-    def move(self):
-        self.x += self.speed
-        # Reverse direction upon reaching the screen edges
-        if self.x < 0 or self.x > 750:  # Assuming screen width is 800
-            self.speed = -self.speed
+    def update(self, player_x):
+        # The enemy starts from its initial position
+        if self.x < player_x:  # Follow the player if enemy is to the left
+            self.x += self.speed
+        elif self.x > player_x:  # Optional: to reset position if the enemy goes right
+            self.x -= self.speed
 
-    def draw(self, surface):
-        # Draw the enemy as a red rectangle
-        self.hitbox = pygame.draw.rect(surface, (255, 0, 0), (self.x, self.y, self.width, self.height))
+        # Keep the enemy on the ground
+        self.y = 500  # Set a fixed y-position for the enemy on the ground
+
+def draw(self, surface, camera_offset_x):
+    # Draw the enemy considering camera offset
+    self.hitbox = pygame.draw.rect(surface, (255, 0, 0), (self.x - camera_offset_x, self.y, self.width, self.height))
