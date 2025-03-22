@@ -1,39 +1,39 @@
+# main.py
 
 import pygame
-from game_objects.player import Player
-from game_objects.enemy import Enemy
+from game_states.main_menu import MainMenu
+from game_states.level import Level
+
+# Initialize Pygame
+pygame.init()
 
 # Constants
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
 FPS = 60
 
-pygame.init()
+# Set up the display
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-clock = pygame.time.Clock()
-
-# Game Initialization
-player = Player(100, SCREEN_HEIGHT - 70)
-enemy = Enemy(300, SCREEN_HEIGHT - 70)
+pygame.display.set_caption("Termite Game Prototype")
 
 def main():
+    clock = pygame.time.Clock()
     running = True
+    current_state = "main_menu"
+
+    main_menu = MainMenu(screen)
+    level = Level(screen)
+
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
 
-        keys = pygame.key.get_pressed()
-        player.move(keys)
+        if current_state == "main_menu":
+            current_state = main_menu.run()
+        elif current_state == "level":
+            current_state = level.run()
 
-        # Clear screen
-        screen.fill((135, 206, 250))  # Light blue background
-
-        # Draw elements
-        player.draw(screen)
-        enemy.draw(screen)
-
-        pygame.display.flip()
         clock.tick(FPS)
 
     pygame.quit()

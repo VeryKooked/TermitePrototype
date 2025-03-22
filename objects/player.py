@@ -1,13 +1,13 @@
 # player.py
 
 import pygame
-from game_object import GameObject
+from objects import game_object
 
-class Player(GameObject):
+class Player(game_object):
     def __init__(self, x, y):
         super().__init__(x, y)
         self.width = 50
-        self.height = 50
+        self.height = 50    
         self.velocity = 5
         self.is_jumping = False
         self.jump_speed = 10
