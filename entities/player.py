@@ -1,7 +1,7 @@
 # entities/player.py
 
 import pygame
-from .base import BaseEntity
+from entities.base import BaseEntity  # Ensure this import path matches your structure
 
 class Player(BaseEntity):
     def __init__(self, x, y):
@@ -48,4 +48,5 @@ class Player(BaseEntity):
             self.is_jumping = False
 
     def draw(self, surface):
+        # Draw the player as a blue rectangle
         self.hitbox = pygame.draw.rect(surface, (0, 128, 255), (self.x, self.y, self.width, self.height))
