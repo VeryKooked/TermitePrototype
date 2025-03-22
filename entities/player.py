@@ -1,5 +1,6 @@
 import pygame
 from entities.base import BaseEntity
+from game_states.camera import Camera
 
 class Player(BaseEntity):
     def __init__(self, x, y):
@@ -36,5 +37,6 @@ class Player(BaseEntity):
             self.rect.y += self.gravity
         self.collide_with_platforms(platforms)
 
-    def draw(self, screen):
-        self.draw(screen, (0, 0, 255))  # Blue player
+    def draw(self, screen, camera):
+        pygame.draw.rect(screen, (0, 0, 255), camera.apply(self))
+

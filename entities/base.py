@@ -20,5 +20,5 @@ class BaseEntity:
         return False
 
     def draw(self, screen, color):
-        """Draw the entity to the screen."""
+        """Draw the entity to the screen with a specified color."""
         pygame.draw.rect(screen, color, self.rect)
