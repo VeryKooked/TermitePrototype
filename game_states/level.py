@@ -1,8 +1,8 @@
 # game_states/level.py
 
 import pygame
-from game_objects.player import Player
-from game_objects.enemy import Enemy
+from objects.player import Player
+from objects.enemy import Enemy
 
 class Level:
     def __init__(self, screen):
