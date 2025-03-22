@@ -1,7 +1,7 @@
 
 import pygame
-from player import Player
-from enemy import Enemy
+from game_objects.player import Player
+from game_objects.enemy import Enemy
 
 # Constants
 SCREEN_WIDTH = 800

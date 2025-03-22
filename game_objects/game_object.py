@@ -1,4 +1,4 @@
-# Generalised game objects
+# general game objects
 
 class GameObject:
     def __init__(self, x, y):
@@ -9,4 +9,4 @@ class GameObject:
         pass
 
     def draw(self, surface):
-        pass
+        pass  # This will be implemented in subclasses
