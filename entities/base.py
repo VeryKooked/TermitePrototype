@@ -1,6 +1,6 @@
-# general game objects
+# entities/base.py
 
-class GameObject:
+class BaseEntity:
     def __init__(self, x, y):
         self.x = x
         self.y = y
@@ -9,4 +9,4 @@ class GameObject:
         pass
 
     def draw(self, surface):
-        pass  # This will be implemented in subclasses
+        pass
