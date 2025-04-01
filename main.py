@@ -2,55 +2,51 @@ import pygame
 from entities.player import Player
 from entities.enemy import Enemy
 from entities.platform import Platform
-from game_states.camera import Camera
+from game_states.main_menu import MainMenu
+from game_states.level import Level
 
-# Initialize pygame
-pygame.init()
+def main():
+    pygame.init()
+    screen = pygame.display.set_mode((800, 600))
+    pygame.display.set_caption('Platformer Game')
 
-# Constants
-SCREEN_WIDTH = 800
-SCREEN_HEIGHT = 600
-FPS = 60
+    # Create game objects
+    player = Player(100, 250)  
+    enemy = Enemy(400, 500)
+    platforms = [Platform(200, 550, 300, 20), Platform(600, 450, 300, 20), Platform(100, 350, 300, 20)]
 
-# Initialize Screen
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-pygame.display.set_caption("Platformer Adventure")
+    clock = pygame.time.Clock()
+    main_menu = MainMenu()
+    level = Level(player)  
 
-# Create game objects
-player = Player(100, 500)
-enemy = Enemy(400, 500)
-platforms = [Platform(200, 550, 300, 20), Platform(600, 450, 300, 20), Platform(100, 350, 300, 20)]
+    # Game loop
+    running = True
+    while running:
+        screen.fill((0, 0, 0))  # Clear the screen with black
 
-# Initialize Camera
-camera = Camera(SCREEN_WIDTH, SCREEN_HEIGHT)
+        #  update game state
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
 
-# Main game loop
-clock = pygame.time.Clock()
-running = True
-while running:
-    screen.fill((135, 206, 235))  # Sky blue background
+        # Update entities
+        player.update(platforms)
+        player.update(platforms)
 
-    keys = pygame.key.get_pressed()
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
+        # Draw entities
+        player.draw(screen)  
+        enemy.draw(screen) 
 
-    # Update player and enemy movement
-    player.update(keys, platforms)
-    enemy.update(platforms)
+        # Draw platforms
+        for platform in platforms:
+            platform.draw(screen)
 
-    # Update Camera to follow the player
-    camera.update(player)
+        pygame.display.flip()  # Update the screen
+        clock.tick(60)  
 
-    # Draw platforms
-    for platform in platforms:
-        pygame.draw.rect(screen, (139, 69, 19), camera.apply_rect(platform.rect))  # Brown platforms
+    pygame.quit()
 
-    # Draw player and enemy with camera applied
-    player.draw(screen, camera)
-    enemy.draw(screen, camera)
 
-    pygame.display.flip()
-    clock.tick(FPS)
 
-pygame.quit()
+if __name__ == "__main__":
+    main()

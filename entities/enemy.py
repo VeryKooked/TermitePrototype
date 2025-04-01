@@ -3,13 +3,13 @@ from entities.base import Entity
 
 class Enemy(Entity):
     def __init__(self, x, y):
-        super().__init__(x, y, 50, 50)
-        self.color = (255, 0, 0)  # Red color
-        self.vel_x = 2  # Enemy speed
+        super().__init__(x, y, 50, 50)  # Enemy size 
+        self.image = pygame.Surface((50, 50))  # Enemy image (just a rectangle for now)
+        self.image.fill((255, 0, 0))  # Red enemy 
 
-    def update(self, platforms):
-        """Update enemy state (simple AI or random movement)"""
-        self.move(platforms)
+    def update(self):
+        """Update the enemy’s state (movement, etc.)"""
+        pass
 
-    def draw(self, screen, camera):
-        pygame.draw.rect(screen, self.color, camera.apply(self))
+    def draw(self, screen):
+        screen.blit(self.image, self.rect)

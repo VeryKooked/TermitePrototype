@@ -5,7 +5,7 @@ class Entity:
         self.rect = pygame.Rect(x, y, width, height)
         self.vel_x = 0
         self.vel_y = 0
-        self.on_ground = False  # To check if the entity is standing on a platform
+        self.on_ground = False  # check if entity on platform
 
     def move(self, platforms):
         """Move the entity while checking for collisions"""
@@ -17,9 +17,10 @@ class Entity:
 
     def collide_with_platforms(self, platforms, axis):
         """Check for collisions with platforms on specified axis"""
+        self.on_ground = False  #
         for platform in platforms:
             if self.rect.colliderect(platform.rect):
-                if axis == 'x':  # Horizontal collision
+                if axis == 'x':  
                     if self.vel_x > 0:  # Moving right
                         self.rect.right = platform.rect.left
                     elif self.vel_x < 0:  # Moving left
@@ -28,12 +29,12 @@ class Entity:
                 elif axis == 'y':  # Vertical collision
                     if self.vel_y > 0:  # Falling
                         self.rect.bottom = platform.rect.top
-                        self.on_ground = True
-                        self.vel_y = 0  # Stop falling
-                    elif self.vel_y < 0:  # Moving up (jumping)
+                        self.on_ground = True  
+                        self.vel_y = 0  
+                    elif self.vel_y < 0: 
                         self.rect.top = platform.rect.bottom
                         self.vel_y = 0  # Stop upward movement
         if axis == 'y' and not self.on_ground:
-            self.vel_y += 1  # Simulate gravity
-        else:
-            self.on_ground = False  # Not on the ground anymore
+            self.vel_y += 1  
+        elif self.on_ground:
+            self.vel_y = 0  
