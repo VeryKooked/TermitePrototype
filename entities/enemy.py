@@ -8,7 +8,6 @@ class Enemy(Entity):
         self.image.fill((255, 0, 0))  # Red enemy 
 
     def update(self):
-        """Update the enemy’s state (movement, etc.)"""
         pass
 
     def draw(self, screen):
