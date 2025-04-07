@@ -15,8 +15,8 @@ class Player(Entity):
         
         self.velocity_x = 0  
         self.velocity_y = 0  #
-        self.speed = 1  # Movement speed
-        self.gravity = 0.8  # Gravity strength
+        self.speed = 4  # Movement speed
+        self.gravity = 0.6  # Gravity strength
         self.jump_strength = -15  # Jump strength
         self.on_ground = False  
         

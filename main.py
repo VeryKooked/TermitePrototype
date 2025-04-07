@@ -19,10 +19,10 @@ def main():
     main_menu = MainMenu()
     level = Level(player)  
 
-    # Game loop
+    # Gameloop
     running = True
     while running:
-        screen.fill((0, 0, 0))  # Clear the screen with black
+        screen.fill((0, 0, 0))  #background
 
         #  update game state
         for event in pygame.event.get():
@@ -41,7 +41,7 @@ def main():
         for platform in platforms:
             platform.draw(screen)
 
-        pygame.display.flip()  # Update the screen
+        pygame.display.flip()  # Updating screen
         clock.tick(60)  
 
     pygame.quit()
