@@ -7,14 +7,6 @@ class Entity:
         self.vel_y = 0
         self.on_ground = False  # check if entity on platform
 
-    def move(self, platforms):
-        """Move the entity while checking for collisions"""
-        self.rect.x += self.vel_x
-        self.collide_with_platforms(platforms, 'x')
-
-        self.rect.y += self.vel_y
-        self.collide_with_platforms(platforms, 'y')
-
     def collide_with_platforms(self, platforms, axis):
         """Check for collisions with platforms on specified axis"""
         self.on_ground = False  #
@@ -38,3 +30,14 @@ class Entity:
             self.vel_y += 1  
         elif self.on_ground:
             self.vel_y = 0  
+
+
+    def move(self, platforms):
+        """Move the entity while checking for collisions"""
+        self.rect.x += self.vel_x
+        self.collide_with_platforms(platforms, 'x')
+
+        self.rect.y += self.vel_y
+        self.collide_with_platforms(platforms, 'y')
+
+

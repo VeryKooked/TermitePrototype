@@ -13,7 +13,7 @@ def main():
     # Create game objects
     player = Player(100, 250)  
     enemy = Enemy(400, 500)
-    platforms = [Platform(200, 550, 300, 20), Platform(600, 450, 300, 20), Platform(100, 350, 300, 20)]
+    platforms = [Platform(200, 550, 300, 10), Platform(450, 450, 300, 10), Platform(100, 350, 300, 10)]
 
     clock = pygame.time.Clock()
     main_menu = MainMenu()
