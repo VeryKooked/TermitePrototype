@@ -20,7 +20,7 @@ class Player(Entity):
         self.jump_strength = -15  # Jump strength
         self.on_ground = False  
         
-    def update(self, platforms):
+    def inputs(self, platforms):
         self.velocity_x = 0  # Reset horizontal velocity each frame
 
         # movement-horizontal

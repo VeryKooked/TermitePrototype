@@ -28,8 +28,8 @@ def level():
                 running = False
 
         # Update entities
-        player.update(platforms)
-        player.update(platforms)
+        player.inputs(platforms)
+        player.inputs(platforms)
 
         # Draw entities
         player.draw(screen)  
