@@ -2,7 +2,6 @@ import pygame
 from entities.player import Player
 from entities.enemy import Enemy
 from entities.platform import Platform
-from game_states.main_menu import MainMenu
 
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
@@ -15,7 +14,6 @@ def level():
     platforms = [Platform(200, 550, 300, 10), Platform(450, 450, 300, 10), Platform(100, 350, 300, 10)]
 
     clock = pygame.time.Clock()
-    main_menu = MainMenu() 
 
     # Gameloop
     running = True
