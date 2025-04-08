@@ -4,8 +4,8 @@ from entities.base import Entity
 class Player(Entity):
     def __init__(self, x, y):
         # Set width and height
-        self.width = 40  
-        self.height = 60  
+        self.width = 15 
+        self.height = 30
         super().__init__(x, y, self.width, self.height)  # Pass width and height to the parent constructor
         self.image = pygame.Surface((self.width, self.height))
         self.image.fill((0, 0, 255))  # Blue color 
@@ -16,8 +16,8 @@ class Player(Entity):
         self.velocity_x = 0  
         self.velocity_y = 0  #
         self.speed = 3  # Movement speed
-        self.gravity = 0.3  # Gravity strength
-        self.jump_strength = -10  # Jump strength
+        self.gravity = 0.7  # Gravity strength
+        self.jump_strength = -15  # Jump strength
         self.on_ground = False  
         
     def update(self, platforms):
