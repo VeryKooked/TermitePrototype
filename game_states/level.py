@@ -1,6 +1,6 @@
 import pygame
 from entities.player import Player
-from entities.enemy import Enemy
+from entities.enemy import Wasp
 from entities.platform import Platform
 from game_states.gameover import gameoverscreen
 from entities.leafarmour import Leafarmour
@@ -13,10 +13,10 @@ def level():
     # Create game objects
     player = Player(100, 250)
     enemies = [
-        Enemy(400, 500),
-        Enemy(900, 480),
-        Enemy(1300, 500),
-        Enemy(1600, 450)
+        Wasp(400, 500),
+        Wasp(900, 480),
+        Wasp(1300, 500),
+        Wasp(1600, 450)
     ]
     platforms = [
         Platform(200, 550, 300, 10),
