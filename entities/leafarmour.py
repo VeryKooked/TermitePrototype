@@ -17,6 +17,7 @@ class Leafarmour:
     
 
 
+
     def collect(self, player_rect, keys, player):
         if not self.collected and self.rect.colliderect(player_rect):
             if keys[pygame.K_UP]:

@@ -11,7 +11,7 @@ class Magpie(Entity):
         self.swoop_speed = 16
         self.state = 'waiting'
         self.timer = 0
-        self.delay = 120
+        self.delay = 40
         self.rect = self.image.get_rect(topleft=(x, y))
         self.font = pygame.font.Font(None, 24)
         self.damage = 4

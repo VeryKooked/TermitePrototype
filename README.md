@@ -1,3 +1,2 @@
 # TermitePrototype
-Termite Man is a platformer-adventure game featuering 5 levels, including a boss level on the final level. You get stronger as you progress, defeating enemies and gaining items.
-asdasdasd
+Avoid homing wasps and magpies attempting to swoop you as you traverse on various platforms. In order to save your Colony, you must prove your strength to your Queen.

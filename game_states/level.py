@@ -19,7 +19,11 @@ def level():
         Wasp(900, 480),
         Wasp(1300, 500),
         Wasp(1600, 450),
-        Magpie(1425, -400)
+        Wasp(1950, 300),
+        Wasp(2400, 500),
+        Wasp(3300, 400),
+        Magpie(1425, -400),
+        Magpie(2500, -400)
     ]
     platforms = [
         Platform(200, 550, 300, 10),
@@ -31,10 +35,23 @@ def level():
         Platform(1350, 300, 300, 10),
         Platform(1350, 550, 300, 10),
         Platform(1650, 450, 200, 10),
-        Platform(1850, 350, 300, 10)
+        Platform(1850, 350, 300, 10),
+        Platform(1850, 500, 200, 10),
+        Platform(2200, 400, 300, 10),
+        Platform(2150, 500, 300, 10),
+        Platform(2500, 450, 300, 10),
+        Platform(2750, 350, 200, 10),
+        Platform(3000, 550, 200, 10),
+        Platform(3250, 450, 100, 10),
+        Platform(3400, 550, 200, 10),
+        Platform(3400, 300, 200, 10),
+        Platform(3500, 600, 2000, 30)
     ]
 
-    leafarmour = Leafarmour(700, 420)
+    items = [
+        Leafarmour(700, 420),
+        Leafarmour(2400, 460)
+    ]
     camera = {'x': 0, 'y': 0}
 
     clock = pygame.time.Clock()
@@ -73,14 +90,25 @@ def level():
         # Drawing the player
         player.draw(screen, camera)
 
-        # Leafarmour draw
-        if not leafarmour.collected:
-            leafarmour.collect(player.rect, keys, player)
-            leafarmour.draw(screen, camera)
-        elif player.has_leafarmour:
-            leafarmour.rect.topleft = (player.rect.centerx + 5, player.rect.top + 10)
-            adjusted_rect = leafarmour.rect.move(-camera['x'], -camera['y'])
-            screen.blit(leafarmour.image, adjusted_rect)
+        # Leafarmour logic
+        for armour in items:
+            if not armour.collected:
+                armour.collect(player.rect, keys, player)
+
+                # Draw instruction above each
+                instruction_font = pygame.font.Font(None, 24)
+                instruction_text = instruction_font.render("Press ↑ arrow key here", True, (255, 255, 255))
+                instruction_pos = (armour.rect.centerx - camera['x'] - instruction_text.get_width() // 2,
+                                armour.rect.top - camera['y'] - 20)
+                screen.blit(instruction_text, instruction_pos)
+
+            if not armour.collected:
+                armour.draw(screen, camera)
+            elif player.has_leafarmour:
+                armour.rect.topleft = (player.rect.centerx + 5, player.rect.top + 10)
+                adjusted_rect = armour.rect.move(-camera['x'], -camera['y'])
+                screen.blit(armour.image, adjusted_rect)
+
 
         # Health HUD
         font = pygame.font.Font(None, 36)
