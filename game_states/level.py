@@ -1,9 +1,11 @@
 import pygame
 from entities.player import Player
-from entities.enemy import Wasp
+from entities.wasp import Wasp  # Adjusted to match the new class name
 from entities.platform import Platform
 from game_states.gameover import gameoverscreen
 from entities.leafarmour import Leafarmour
+from entities.magpie import Magpie
+
 
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
@@ -16,7 +18,8 @@ def level():
         Wasp(400, 500),
         Wasp(900, 480),
         Wasp(1300, 500),
-        Wasp(1600, 450)
+        Wasp(1600, 450),
+        Magpie(600, 100)
     ]
     platforms = [
         Platform(200, 550, 300, 10),
@@ -53,41 +56,18 @@ def level():
         camera['x'] = player.rect.centerx - screen.get_width() // 2
         camera['y'] = player.rect.centery - screen.get_height() // 2
 
-        # Inside the main loop, after camera calculation
+        # Update and draw enemies (Wasp)
         for enemy in enemies:
             enemy.update(player, camera, screen.get_width(), screen.get_height())
             enemy.draw(screen, camera)
 
 
-        # Collision damage check
-        current_time = pygame.time.get_ticks()
-        if player.rect.colliderect(enemy.rect):
-            if current_time - last_hit_time > damage_cooldown:
-                if player.has_leafarmour and player.shield_points > 0:
-                    player.shield_points -= 1
-                    print(f"Shield hit! Remaining shield: {player.shield_points}")
-                    if player.shield_points <= 0:
-                        player.has_leafarmour = False
-                        print("Leafarmour shattered!")
-                else:
-                    player.health -= 1
-                    print(f"Player HP: {player.health}")
-                last_hit_time = current_time
-
-        # drawing the platforms
+        # Drawing the platforms
         for platform in platforms:
             platform.draw(screen, camera)
 
-        # drawing the player
+        # Drawing the player
         player.draw(screen, camera)
-
-        # drawing the enemies
-        # Inside the main loop, after camera calculation
-        for enemy in enemies:
-            enemy.update(player, camera, screen.get_width(), screen.get_height())
-            enemy.draw(screen, camera)
-
-
 
         # Leafarmour draw
         if not leafarmour.collected:
