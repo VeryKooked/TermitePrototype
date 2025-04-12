@@ -31,5 +31,5 @@ class Enemy(Entity):
 
         # wasp name above
         label = self.font.render("Wasp", True, (255, 255, 255))
-        label_rect = label.get_rect(center=(self.rect.centerx, self.rect.top - 10))
+        label_rect = label.get_rect(center=(self.rect.centerx - camera['x'], self.rect.top - 10 - camera['y']))
         screen.blit(label, label_rect)
