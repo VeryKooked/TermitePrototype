@@ -19,7 +19,7 @@ def level():
         Wasp(900, 480),
         Wasp(1300, 500),
         Wasp(1600, 450),
-        Magpie(1425, -200)
+        Magpie(1425, -400)
     ]
     platforms = [
         Platform(200, 550, 300, 10),

@@ -7,7 +7,7 @@ class Wasp(Entity):
         self.image = pygame.Surface((15, 25))
         self.image.fill((255, 0, 0))
         self.health = 3
-        self.speed = 1.5
+        self.speed = 2
         self.rect = self.image.get_rect(topleft=(x, y))
         self.font = pygame.font.Font(None, 24)
         self.active = False
