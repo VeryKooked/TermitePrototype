@@ -12,12 +12,25 @@ pygame.display.set_caption('Platformer Game')
 def level():
     # Create game objects
     player = Player(100, 250)
-    enemy = Enemy(400, 500)
+    enemies = [
+        Enemy(400, 500),
+        Enemy(900, 480),
+        Enemy(1300, 500),
+        Enemy(1600, 450)
+    ]
     platforms = [
         Platform(200, 550, 300, 10),
         Platform(450, 450, 300, 10),
-        Platform(100, 350, 300, 10)
+        Platform(100, 350, 200, 10),
+        Platform(700, 450, 300, 10),
+        Platform(950, 350, 200, 10),
+        Platform(1100, 400, 200, 10),
+        Platform(1350, 300, 300, 10),
+        Platform(1350, 550, 300, 10),
+        Platform(1650, 450, 200, 10),
+        Platform(1850, 350, 300, 10)
     ]
+
     leafarmour = Leafarmour(700, 420)
     camera = {'x': 0, 'y': 0}
 
@@ -40,7 +53,11 @@ def level():
         camera['x'] = player.rect.centerx - screen.get_width() // 2
         camera['y'] = player.rect.centery - screen.get_height() // 2
 
-        enemy.update(player)
+        # Inside the main loop, after camera calculation
+        for enemy in enemies:
+            enemy.update(player, camera, screen.get_width(), screen.get_height())
+            enemy.draw(screen, camera)
+
 
         # Collision damage check
         current_time = pygame.time.get_ticks()
@@ -57,15 +74,20 @@ def level():
                     print(f"Player HP: {player.health}")
                 last_hit_time = current_time
 
-        # Draw platforms
+        # drawing the platforms
         for platform in platforms:
             platform.draw(screen, camera)
 
-        # Player
+        # drawing the player
         player.draw(screen, camera)
 
-        # Enemy
-        enemy.draw(screen, camera)
+        # drawing the enemies
+        # Inside the main loop, after camera calculation
+        for enemy in enemies:
+            enemy.update(player, camera, screen.get_width(), screen.get_height())
+            enemy.draw(screen, camera)
+
+
 
         # Leafarmour draw
         if not leafarmour.collected:
