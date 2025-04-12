@@ -6,7 +6,9 @@ class Enemy(Entity):
         super().__init__(x, y, 50, 50)  # size of enemy
         self.image = pygame.Surface((15, 25))  # visual rectangle
         self.image.fill((255, 0, 0))  # red color
+        self.health = 3  # Enemy starts with 3 HP
         self.speed = 1.4  # movement speed toward player
+        self.rect = self.image.get_rect(topleft=(x, y))
 
     def update(self, player):
         # Calculate the direction vector from enemy to player

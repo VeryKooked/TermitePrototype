@@ -9,9 +9,10 @@ class Player(Entity):
         super().__init__(x, y, self.width, self.height)  # Pass width and height to the parent constructor
         self.image = pygame.Surface((self.width, self.height))
         self.image.fill((0, 0, 255))  # Blue color 
-        self.rect = self.image.get_rect()
+        self.rect = self.image.get_rect(topleft=(x, y))
         self.rect.x = x
         self.rect.y = y
+        self.health = 5  # Player starts with 5 HP
         
         self.velocity_x = 0  
         self.velocity_y = 0  #
