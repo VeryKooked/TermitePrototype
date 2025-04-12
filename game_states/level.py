@@ -19,7 +19,7 @@ def level():
         Wasp(900, 480),
         Wasp(1300, 500),
         Wasp(1600, 450),
-        Magpie(600, 100)
+        Magpie(1425, -200)
     ]
     platforms = [
         Platform(200, 550, 300, 10),
@@ -60,6 +60,10 @@ def level():
         for enemy in enemies:
             enemy.update(player, camera, screen.get_width(), screen.get_height())
             enemy.draw(screen, camera)
+
+        current_time = pygame.time.get_ticks()
+        for enemy in enemies:
+            enemy.apply_damage(player, current_time)
 
 
         # Drawing the platforms
