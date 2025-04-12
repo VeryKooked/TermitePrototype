@@ -10,8 +10,7 @@ class Player(Entity):
         self.image = pygame.Surface((self.width, self.height))
         self.image.fill((0, 0, 255))  # Blue color 
         self.rect = self.image.get_rect(topleft=(x, y))
-        self.rect.x = x
-        self.rect.y = y
+
         self.health = 5  # Player starts with 5 HP
         self.has_leafblade = False  # Track item possession
         self.velocity_x = 0  

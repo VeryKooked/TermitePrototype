@@ -9,6 +9,7 @@ class Enemy(Entity):
         self.health = 3  # Enemy starts with 3 HP
         self.speed = 1.4  # movement speed toward player
         self.rect = self.image.get_rect(topleft=(x, y))
+        self.font = pygame.font.Font(None, 24)  # Small font for label
 
     def update(self, player):
         # Calculate the direction vector from enemy to player
@@ -27,3 +28,7 @@ class Enemy(Entity):
     def draw(self, screen):
         screen.blit(self.image, self.rect)
 
+        # Draw "Wasp" label above the enemy
+        label = self.font.render("Wasp", True, (255, 255, 255))
+        label_rect = label.get_rect(center=(self.rect.centerx, self.rect.top - 10))
+        screen.blit(label, label_rect)

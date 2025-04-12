@@ -1,9 +1,7 @@
-# entities/leafblade.py
 import pygame
 from entities.player import Player
 
-
-class Leafblade:
+class Leafarmour:
     def __init__(self, x, y):
         self.width = 10
         self.height = 25
@@ -20,10 +18,8 @@ class Leafblade:
         if not self.collected and self.rect.colliderect(player_rect):
             if keys[pygame.K_UP]:
                 self.collected = True
-                player.has_leafblade = True  # <-- important: update instance, not class
-                print("Leafblade collected!")  
+                player.has_leafblade = True  # You can rename this to has_leafarmour if you want
+                player.shield_points = 3      # Grant 3 shield points on pickup
+                print("Leafarmour collected! Shield activated.")
                 return True
         return False
-
-
-
