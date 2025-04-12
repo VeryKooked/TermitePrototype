@@ -4,8 +4,8 @@ from entities.base import Entity
 class Player(Entity):
     def __init__(self, x, y):
         # Set width and height
-        self.width = 15 
-        self.height = 30
+        self.width = 20 
+        self.height = 40
         super().__init__(x, y, self.width, self.height)  # Pass width and height to the parent constructor
         self.image = pygame.Surface((self.width, self.height))
         self.image.fill((0, 0, 255))  # Blue color 
@@ -13,7 +13,7 @@ class Player(Entity):
         self.rect.x = x
         self.rect.y = y
         self.health = 5  # Player starts with 5 HP
-        
+        self.has_leafblade = False  # Track item possession
         self.velocity_x = 0  
         self.velocity_y = 0  #
         self.speed = 2.4  # Movement speed
