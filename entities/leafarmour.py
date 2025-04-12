@@ -10,9 +10,10 @@ class Leafarmour:
         self.rect = self.image.get_rect(topleft=(x, y))
         self.collected = False
 
-    def draw(self, screen):
+    def draw(self, screen, camera):
         if not self.collected:
-            screen.blit(self.image, self.rect)
+            adjusted_rect = self.rect.move(-camera['x'], -camera['y'])
+            screen.blit(self.image, adjusted_rect)
 
     def collect(self, player_rect, keys, player):
         if not self.collected and self.rect.colliderect(player_rect):

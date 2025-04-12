@@ -3,7 +3,7 @@ from entities.player import Player
 from entities.enemy import Enemy
 from entities.platform import Platform
 from game_states.gameover import gameoverscreen
-from entities.leafarmour import Leafarmour  # Updated import
+from entities.leafarmour import Leafarmour
 
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
@@ -11,38 +11,36 @@ pygame.display.set_caption('Platformer Game')
 
 def level():
     # Create game objects
-    player = Player(100, 250)  # player starting position
-    enemy = Enemy(400, 500)    # enemy starting position
+    player = Player(100, 250)
+    enemy = Enemy(400, 500)
     platforms = [
         Platform(200, 550, 300, 10),
         Platform(450, 450, 300, 10),
         Platform(100, 350, 300, 10)
     ]
-    
-    leafarmour = Leafarmour(700, 420)  # place it on the top-right platform
+    leafarmour = Leafarmour(700, 420)
+    camera = {'x': 0, 'y': 0}
 
     clock = pygame.time.Clock()
-    damage_cooldown = 1000  # milliseconds
+    damage_cooldown = 1000
     last_hit_time = 0
 
-    # Game loop
     running = True
     while running:
-        screen.fill((0, 0, 0))  # background
-
+        screen.fill((0, 0, 0))
         keys = pygame.key.get_pressed()
 
-        # Handle events
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
 
-        # Player inputs
         player.inputs(platforms)
 
-        # Update and draw enemy
+        # Update camera to center on player
+        camera['x'] = player.rect.centerx - screen.get_width() // 2
+        camera['y'] = player.rect.centery - screen.get_height() // 2
+
         enemy.update(player)
-        enemy.draw(screen)
 
         # Collision damage check
         current_time = pygame.time.get_ticks()
@@ -61,45 +59,39 @@ def level():
 
         # Draw platforms
         for platform in platforms:
-            platform.draw(screen)
+            platform.draw(screen, camera)
 
-        # Player first
-        player.draw(screen)
+        # Player
+        player.draw(screen, camera)
 
-        # Draw Leafarmour depending on state
+        # Enemy
+        enemy.draw(screen, camera)
+
+        # Leafarmour draw
         if not leafarmour.collected:
             leafarmour.collect(player.rect, keys, player)
-            leafarmour.draw(screen)
+            leafarmour.draw(screen, camera)
         elif player.has_leafarmour:
-            # Draw it in the player’s hand
             leafarmour.rect.topleft = (player.rect.centerx + 5, player.rect.top + 10)
-            screen.blit(leafarmour.image, leafarmour.rect)
+            adjusted_rect = leafarmour.rect.move(-camera['x'], -camera['y'])
+            screen.blit(leafarmour.image, adjusted_rect)
 
-        # Display player's health
+        # Health HUD
         font = pygame.font.Font(None, 36)
         health_text = font.render(f"Health: {player.health}", True, (255, 255, 255))
         screen.blit(health_text, (10, 10))
 
-        # Display shield points if active
         if player.has_leafarmour:
             shield_text = font.render(f"Shield: {player.shield_points}", True, (0, 255, 0))
             screen.blit(shield_text, (10, 50))
 
-        # Game over if player falls
+        # Game over checks
         if player.rect.top > screen.get_height():
             retry = gameoverscreen(screen)
-            if retry:
-                return level()
-            else:
-                running = False
-
-        # Game over if health depleted
+            return level() if retry else None
         if player.health <= 0:
             retry = gameoverscreen(screen)
-            if retry:
-                return level()
-            else:
-                running = False
+            return level() if retry else None
 
         pygame.display.flip()
         clock.tick(60)

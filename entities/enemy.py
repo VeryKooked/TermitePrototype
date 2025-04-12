@@ -25,10 +25,11 @@ class Enemy(Entity):
         self.rect.x += dx * self.speed
         self.rect.y += dy * self.speed
 
-    def draw(self, screen):
-        screen.blit(self.image, self.rect)
+    def draw(self, screen, camera):
+        adjusted_rect = self.rect.move(-camera['x'], -camera['y'])
+        screen.blit(self.image, adjusted_rect)
 
-        # Draw "Wasp" label above the enemy
+        # wasp name above
         label = self.font.render("Wasp", True, (255, 255, 255))
         label_rect = label.get_rect(center=(self.rect.centerx, self.rect.top - 10))
         screen.blit(label, label_rect)
