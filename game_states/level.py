@@ -48,11 +48,11 @@ def level():
         current_time = pygame.time.get_ticks()
         if player.rect.colliderect(enemy.rect):
             if current_time - last_hit_time > damage_cooldown:
-                if player.has_leafblade and player.shield_points > 0:
+                if player.has_leafarmour and player.shield_points > 0:
                     player.shield_points -= 1
                     print(f"Shield hit! Remaining shield: {player.shield_points}")
                     if player.shield_points <= 0:
-                        player.has_leafblade = False
+                        player.has_leafarmour = False
                         print("Leafarmour shattered!")
                 else:
                     player.health -= 1
@@ -70,7 +70,7 @@ def level():
         if not leafarmour.collected:
             leafarmour.collect(player.rect, keys, player)
             leafarmour.draw(screen)
-        elif player.has_leafblade:
+        elif player.has_leafarmour:
             # Draw it in the player’s hand
             leafarmour.rect.topleft = (player.rect.centerx + 5, player.rect.top + 10)
             screen.blit(leafarmour.image, leafarmour.rect)
@@ -81,7 +81,7 @@ def level():
         screen.blit(health_text, (10, 10))
 
         # Display shield points if active
-        if player.has_leafblade:
+        if player.has_leafarmour:
             shield_text = font.render(f"Shield: {player.shield_points}", True, (0, 255, 0))
             screen.blit(shield_text, (10, 50))
 

@@ -18,7 +18,7 @@ class Leafarmour:
         if not self.collected and self.rect.colliderect(player_rect):
             if keys[pygame.K_UP]:
                 self.collected = True
-                player.has_leafblade = True  # You can rename this to has_leafarmour if you want
+                player.has_leafarmour = True  # You can rename this to has_leafarmour if you want
                 player.shield_points = 3      # Grant 3 shield points on pickup
                 print("Leafarmour collected! Shield activated.")
                 return True

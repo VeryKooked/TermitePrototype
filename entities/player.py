@@ -12,7 +12,7 @@ class Player(Entity):
         self.rect = self.image.get_rect(topleft=(x, y))
 
         self.health = 5  # Player starts with 5 HP
-        self.has_leafblade = False  # Track item possession
+        self.has_leafarmour = False  # Track item possession
         self.velocity_x = 0  
         self.velocity_y = 0  #
         self.speed = 2.4  # Movement speed
