@@ -1,13 +1,13 @@
 import pygame
 
-class Entity:
+class Entity: #base class for all entities
     def __init__(self, x, y, width, height):
         self.rect = pygame.Rect(x, y, width, height)
         self.vel_x = 0
         self.vel_y = 0
         self.on_ground = False
 
-    def collide_with_platforms(self, platforms, axis):
+    def collide_with_platforms(self, platforms, axis): #to help with collision
         self.on_ground = False
         for platform in platforms:
             if self.rect.colliderect(platform):
@@ -19,7 +19,7 @@ class Entity:
                     self.vel_x = 0
                 elif axis == 'y':
                     if self.vel_y > 0:
-                        self.rect.bottom = platform.top
+                        self.rect.bottom = platform.rect.top
                         self.on_ground = True
                         self.vel_y = 0
                     elif self.vel_y < 0:
@@ -31,7 +31,7 @@ class Entity:
         elif self.on_ground:
             self.vel_y = 0
 
-    def move(self, platforms):
+    def move(self, platforms): #x and y dimensions for platform collisions
         self.rect.x += self.vel_x
         self.collide_with_platforms(platforms, 'x')
 

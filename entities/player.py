@@ -6,22 +6,22 @@ class Player(Entity):
         # Set width and height
         self.width = 20 
         self.height = 40
-        super().__init__(x, y, self.width, self.height)  # Pass width and height to the parent constructor
+        super().__init__(x, y, self.width, self.height)  # passing width and height to the parent constructor
         self.image = pygame.Surface((self.width, self.height))
-        self.image.fill((0, 0, 255))  # Blue color 
+        self.image.fill((0, 0, 255))  # blue player
         self.rect = self.image.get_rect(topleft=(x, y))
 
-        self.health = 5  # Player starts with 5 HP
-        self.has_leafarmour = False  # Track item possession
+        self.health = 5  # starting hp
+        self.has_leafarmour = False  # item possession boolean variable
         self.velocity_x = 0  
         self.velocity_y = 0  #
-        self.speed = 2.8  # Movement speed
-        self.gravity = 0.3  # Gravity strength
-        self.jump_strength = -9  # Jump strength
+        self.speed = 2.8  # movement speed
+        self.gravity = 0.3  # gravity strength
+        self.jump_strength = -9  # jump strength
         self.on_ground = False  
         
     def inputs(self, platforms):
-        self.velocity_x = 0  # Reset horizontal velocity each frame
+        self.velocity_x = 0  # reset horizontal velocity, inertia isn't real!
 
         # movement-horizontal
         keys = pygame.key.get_pressed()

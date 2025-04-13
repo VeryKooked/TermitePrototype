@@ -1,7 +1,7 @@
 import pygame
 from entities.base import Entity
 
-class Wasp(Entity):
+class Wasp(Entity): #annoying wasp enemies
     def __init__(self, x, y):
         super().__init__(x, y, 50, 50)
         self.image = pygame.Surface((15, 25))
@@ -25,7 +25,7 @@ class Wasp(Entity):
         if not self.active:
             return
 
-        # Chase player
+        # annoying wasp behaviour
         dx = player.rect.centerx - self.rect.centerx
         dy = player.rect.centery - self.rect.centery
         distance = max((dx ** 2 + dy ** 2) ** 0.5, 0.0001)
@@ -34,7 +34,7 @@ class Wasp(Entity):
         self.rect.x += dx * self.speed
         self.rect.y += dy * self.speed
 
-    def apply_damage(self, player, current_time):
+    def apply_damage(self, player, current_time): #annoying wasp damage
         if self.rect.colliderect(player.rect):
             if current_time - self.last_hit_time > self.damage_cooldown:
                 if player.has_leafarmour and player.shield_points > 0:
@@ -48,7 +48,7 @@ class Wasp(Entity):
                     print(f"[Wasp] Player HP: {player.health}")
                 self.last_hit_time = current_time
 
-    def draw(self, screen, camera):
+    def draw(self, screen, camera): #drawing wasps with camera
         adjusted_rect = self.rect.move(-camera['x'], -camera['y'])
         screen.blit(self.image, adjusted_rect)
         label = self.font.render("Wasp", True, (255, 255, 255))

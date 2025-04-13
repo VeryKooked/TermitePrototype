@@ -1,4 +1,3 @@
-# game_states/instructionsscreen.py
 import pygame
 
 class Instructions:
@@ -8,7 +7,7 @@ class Instructions:
         self.running = True
         self.back_button = pygame.Rect(300, 450, 200, 50)
 
-    def draw(self):
+    def draw(self): #drawing the instructions text
         self.screen.fill((0, 0, 0))  # Black background
         title = self.font.render("Instructions", True, (255, 255, 255))
         title_rect = title.get_rect(center=(400, 100))
@@ -51,7 +50,7 @@ class Instructions:
         while self.running:
             result = self.handle_events()
             if result == "back":
-                return  # Return to the main menu
+                return  # return to the main menu
             elif result == "quit":
                 pygame.quit()
                 exit()

@@ -1,6 +1,6 @@
 import pygame
 from entities.player import Player
-from entities.wasp import Wasp  # Adjusted to match the new class name
+from entities.wasp import Wasp  
 from environment.platform import Platform
 from game_states.gameover import gameoverscreen
 from entities.leafarmour import Leafarmour
@@ -18,20 +18,22 @@ def draw_gradient_rect(screen, start_x, end_x, y, height, camera_x):
         ratio = i / width
         r = int(255 * ratio)  # from 0 to 255
         g = int(255 * ratio)  # from 0 to 255
-        b = 0  # yellow fade
+        b = 0  # yellow fade to arena
         color = (r, g, b)
         pygame.draw.rect(screen, color, (start_x + i - camera_x, y, 1, height))
 
 
 
 def level():
-    player = Player(100, 250)
+    player = Player(100, 250) #player position
+
+    #enemy positions below
     enemies = [
         Wasp(400, 500), Wasp(900, 480), Wasp(1300, 500), Wasp(1600, 450),
         Wasp(1950, 300), Wasp(2400, 500), Wasp(3300, 400),  Wasp(4900, 520),
         Magpie(1425, -400), Magpie(2500, -400), Magpie(4750, -350),
-        # Add new boss or enemy types here if needed
     ]
+    #platform positions below
     platforms = [
         Platform(200, 550, 300, 10), Platform(450, 450, 300, 10), Platform(100, 350, 200, 10),
         Platform(700, 450, 300, 10), Platform(950, 350, 200, 10), Platform(1100, 400, 200, 10),
@@ -39,16 +41,15 @@ def level():
         Platform(1850, 350, 300, 10), Platform(1850, 500, 200, 10), Platform(2200, 400, 300, 10),
         Platform(2150, 500, 300, 10), Platform(2500, 450, 300, 10), Platform(2750, 350, 200, 10),
         Platform(3000, 550, 200, 10), Platform(3250, 450, 100, 10), Platform(3400, 550, 200, 10),
-        Platform(3400, 300, 200, 10), Platform(3500, 600, 2000, 30),
-        # New zone (Boss zone) platforms
-        Platform(4600, 500, 300, 10), Platform(4800, 400, 300, 10), Platform(5000, 300, 300, 10)
+        Platform(3400, 300, 200, 10), Platform(3500, 600, 2000, 30), Platform(4600, 500, 300, 10), 
+        Platform(4800, 400, 300, 10), Platform(5000, 300, 300, 10) #probably a better way of doing this
     ]
     items = [
         Leafarmour(700, 420),
         Leafarmour(2400, 460),
         Leafarmour(4600, 450)
     ]
-    camera = {'x': 0, 'y': 0}
+    camera = {'x': 0, 'y': 0} #camera
     clock = pygame.time.Clock()
     damage_cooldown = 1000
     last_hit_time = 0
@@ -64,11 +65,11 @@ def level():
 
         player.inputs(platforms)
 
-        # Update camera to follow player
+        # camera to follow player
         camera['x'] = player.rect.centerx - screen.get_width() // 2
         camera['y'] = player.rect.centery - screen.get_height() // 2
 
-        # Update enemies
+        # update enemies
         for enemy in enemies:
             enemy.update(player, camera, screen.get_width(), screen.get_height())
             enemy.draw(screen, camera)
@@ -77,7 +78,7 @@ def level():
         for enemy in enemies:
             enemy.apply_damage(player, current_time)
 
-        # Draw platforms
+        # draw platforms
         for platform in platforms:
             platform.draw(screen, camera)
 
@@ -85,21 +86,19 @@ def level():
         
         
 
-        # Draw teleport gradient zone
+        # gradient zone will teleport player to arena
         gradient_start = 5500
         gradient_end = 5700
         draw_gradient_rect(screen, gradient_start, gradient_end, 0, screen.get_height(), camera['x'])
-
-        # Define teleport zone rect
         teleport_zone = pygame.Rect(gradient_start, 0, gradient_end - gradient_start, screen.get_height())
         if player.rect.colliderect(teleport_zone):
-            return arena(screen)  # Switch to arena level
+            return arena(screen)  # arena
 
 
-        # Draw player
+        # draw player
         player.draw(screen, camera)
 
-        # Boss zone messages
+        # boss zone messages
         font = pygame.font.Font(None, 48)
         if 4000 <= player.rect.x < 4750:
             text = font.render("RECKLESS CHALLENGER, AREN'T YOU?", True, (255, 255, 255))
@@ -134,7 +133,7 @@ def level():
             shield_text = font.render(f"Shield: {player.shield_points}", True, (0, 255, 0))
             screen.blit(shield_text, (10, 50))
 
-        # Death condition
+        # DYING
         if player.rect.top > screen.get_height() or player.health <= 0:
             retry = gameoverscreen(screen)
             return level() if retry else None

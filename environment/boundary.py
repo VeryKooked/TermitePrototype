@@ -7,7 +7,7 @@ class Walls:
         self.color = (100, 100, 100)  # Dark gray
 
     def draw(self, screen, camera):
-        # Adjust for camera offset
+        # camera offset
         left_rect = self.left_wall.move(-camera['x'], -camera['y'])
         right_rect = self.right_wall.move(-camera['x'], -camera['y'])
         pygame.draw.rect(screen, self.color, left_rect)

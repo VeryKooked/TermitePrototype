@@ -1,7 +1,7 @@
 import pygame
 from entities.base import Entity
 
-class Magpie(Entity):
+class Magpie(Entity): # big aussie swooping bird
     def __init__(self, x, y):
         super().__init__(x, y, 60, 60)
         self.image = pygame.Surface((150, 100))
@@ -18,7 +18,7 @@ class Magpie(Entity):
         self.damage_cooldown = 1000
         self.last_hit_time = 0
 
-    def update(self, player, camera, screen_width, screen_height):
+    def update(self, player, camera, screen_width, screen_height): #updating movement
         view_rect = pygame.Rect(camera['x'], camera['y'], screen_width, screen_height)
 
 
@@ -38,7 +38,7 @@ class Magpie(Entity):
             self.state = 'waiting'
             self.timer = 0
 
-    def apply_damage(self, player, current_time):
+    def apply_damage(self, player, current_time): # damage checking
         if self.rect.colliderect(player.rect):
             if current_time - self.last_hit_time > self.damage_cooldown:
                 if player.has_leafarmour and player.shield_points > 0:
@@ -52,7 +52,7 @@ class Magpie(Entity):
                     print(f"[Magpie] Player HP: {player.health}")
                 self.last_hit_time = current_time
 
-    def draw(self, screen, camera):
+    def draw(self, screen, camera): #drawing big aussie swooping bird
         adjusted_rect = self.rect.move(-camera['x'], -camera['y'])
         screen.blit(self.image, adjusted_rect)
         label = self.font.render("Magpie", True, (255, 255, 255))

@@ -1,38 +1,38 @@
 import pygame
 import math
 import random
-from entities.base import Entity  # Make sure this path matches your structure
+from entities.base import Entity  
 
 class Ant(Entity):
     def __init__(self, x, y):
         super().__init__(x, y, 60, 60)
         self.image = pygame.Surface((60, 60))
-        self.image.fill((255, 255, 0))  # Yellow square
+        self.image.fill((255, 255, 0))  # big yellow square for boss
         self.max_health = 100
         self.health = 100
         self.state = 'idle' 
-        self.cooldown = 2000  # milliseconds
+        self.cooldown = 2000  # cooldown in milliseconds
         self.last_attack = pygame.time.get_ticks()
         self.projectiles = []
 
-        # Jumping motion
-        self.jump_timer = 0
+        # jumping
+        self.jump_timer = 0 
         self.jump_interval = 5000  # jump every 5 seconds
-        self.jump_force = -30  # Upward jump force
+        self.jump_force = -30  
 
-        # Contact damage cooldown
+        # damage cooldown during dash attack
         self.contact_damage_timer = 0
         self.contact_damage_cooldown = 1000  # 1 second
 
     def update(self, player, platforms):
         now = pygame.time.get_ticks()
 
-        # Periodic jumping motion
+        # periodic jumping motion
         if now - self.jump_timer > self.jump_interval and self.on_ground:
             self.vel_y = self.jump_force
             self.jump_timer = now
 
-        # Attacks
+        # attacks
         if now - self.last_attack > self.cooldown:
             self.choose_attack(player)
             self.last_attack = now
@@ -51,18 +51,18 @@ class Ant(Entity):
 
         self.move(platforms)
 
-        # Contact damage with cooldown
+        # damage done
         if self.rect.colliderect(player.rect):
             if now - self.contact_damage_timer > self.contact_damage_cooldown:
                 player.health -= 2
                 self.contact_damage_timer = now
 
-        # Update projectiles
+        # projectiles
         for bullet in self.projectiles[:]:
             bullet['pos'][0] += bullet['vel'][0]
             bullet['pos'][1] += bullet['vel'][1]
 
-            bullet_rect = pygame.Rect(bullet['pos'][0], bullet['pos'][1], 8, 8)
+            bullet_rect = pygame.Rect(bullet['pos'][0], bullet['pos'][1], 15, 15)
             if bullet_rect.colliderect(player.rect):
                 player.health -= 1  # 1 damage from projectile
                 self.projectiles.remove(bullet)
@@ -96,12 +96,12 @@ class Ant(Entity):
     def draw(self, screen, camera):
         screen.blit(self.image, (self.rect.x - camera['x'], self.rect.y - camera['y']))
 
-        # Draw projectiles
+        # drawing projectiles
         for bullet in self.projectiles:
             pygame.draw.circle(screen, (255, 200, 0), 
                 (int(bullet['pos'][0] - camera['x']), int(bullet['pos'][1] - camera['y'])), 5)
 
-        # Draw boss HP bar
+        # drawing boss HP bar
         bar_x = 200
         bar_y = 20
         bar_width = 400
