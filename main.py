@@ -8,7 +8,7 @@ def main():
     # Initialize pygame and create the main menu
     pygame.init()
     menu = MainMenu()
-    
+       
     # Run the main menu and get the game state (level)
     menu.run()  # Once this returns, the level will start
 

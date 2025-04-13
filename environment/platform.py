@@ -12,4 +12,3 @@ class Platform(pygame.sprite.Sprite):
     def draw(self, screen, camera):
         adjusted_rect = self.rect.move(-camera['x'], -camera['y'])
         screen.blit(self.image, adjusted_rect)
-

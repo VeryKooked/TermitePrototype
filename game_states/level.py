@@ -1,7 +1,7 @@
 import pygame
 from entities.player import Player
 from entities.wasp import Wasp  # Adjusted to match the new class name
-from entities.platform import Platform
+from environment.platform import Platform
 from game_states.gameover import gameoverscreen
 from entities.leafarmour import Leafarmour
 from entities.magpie import Magpie

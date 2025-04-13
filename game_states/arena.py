@@ -1,6 +1,6 @@
 import pygame
 from entities.player import Player
-from entities.platform import Platform
+from environment.platform import Platform
 from entities.boss import Ant  # ✅ Import the boss
 from game_states.gameover import gameoverscreen
 
