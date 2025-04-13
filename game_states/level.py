@@ -101,10 +101,10 @@ def level():
 
         # Boss zone messages
         font = pygame.font.Font(None, 48)
-        if 4500 <= player.rect.x < 5000:
+        if 4000 <= player.rect.x < 4750:
             text = font.render("RECKLESS CHALLENGER, AREN'T YOU?", True, (255, 255, 255))
             screen.blit(text, (screen.get_width() // 2 - text.get_width() // 2, 150))
-        elif 5000 <= player.rect.x < 5500:
+        elif 4750 <= player.rect.x < 5500:
             text = font.render("Very well. Enter my domain.", True, (255, 0, 0))
             screen.blit(text, (screen.get_width() // 2 - text.get_width() // 2, 150))
 

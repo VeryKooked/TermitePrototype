@@ -46,7 +46,7 @@ class Player(Entity):
         # platform collision
         self.on_ground = False
         for platform in platforms:
-            if self.rect.colliderect(platform.rect):
+            if self.rect.colliderect(platform):
                 if self.velocity_y > 0:  # Falling down
                     self.rect.bottom = platform.rect.top
                     self.velocity_y = 0
