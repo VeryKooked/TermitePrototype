@@ -24,6 +24,6 @@ class Leafarmour:
                 self.collected = True
                 player.has_leafarmour = True  
                 player.shield_points = 3      # leafarmour will give 3 shield points everytime picked up
-                print("Leafarmour collected! Shield activated.")
+                print("Leafarmour collected, +3 shield points.")
                 return True
         return False

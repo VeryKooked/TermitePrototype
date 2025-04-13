@@ -43,10 +43,10 @@ class Magpie(Entity): # big aussie swooping bird
             if current_time - self.last_hit_time > self.damage_cooldown:
                 if player.has_leafarmour and player.shield_points > 0:
                     player.shield_points -= 1
-                    print(f"[Magpie] Shield hit! Remaining shield: {player.shield_points}")
+                    print(f"[Magpie] Shield hit, Remaining shield is {player.shield_points}")
                     if player.shield_points <= 0:
                         player.has_leafarmour = False
-                        print("Leafarmour shattered!")
+                        print("Leafarmour broken")
                 else:
                     player.health -= self.damage
                     print(f"[Magpie] Player HP: {player.health}")

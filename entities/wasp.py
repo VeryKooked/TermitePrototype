@@ -20,7 +20,7 @@ class Wasp(Entity): #annoying wasp enemies
 
         if not self.active and self.rect.colliderect(view_rect):
             self.active = True
-            print(f"Wasp at {self.rect.topleft} activated!")
+            print(f"Wasp at {self.rect.topleft} awakened")
 
         if not self.active:
             return
@@ -39,13 +39,13 @@ class Wasp(Entity): #annoying wasp enemies
             if current_time - self.last_hit_time > self.damage_cooldown:
                 if player.has_leafarmour and player.shield_points > 0:
                     player.shield_points -= 1
-                    print(f"[Wasp] Shield hit! Remaining shield: {player.shield_points}")
+                    print(f"[Wasp] Shield hit, Remaining shield is {player.shield_points}")
                     if player.shield_points <= 0:
                         player.has_leafarmour = False
-                        print("Leafarmour shattered!")
+                        print("Leafarmour broke")
                 else:
                     player.health -= self.damage
-                    print(f"[Wasp] Player HP: {player.health}")
+                    print(f"[Wasp] Player HP is {player.health}")
                 self.last_hit_time = current_time
 
     def draw(self, screen, camera): #drawing wasps with camera
